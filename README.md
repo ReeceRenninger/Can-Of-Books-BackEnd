@@ -5,22 +5,29 @@
 
 ## Overview
 
-React developed website connected to a MongoDB database
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
+Backend server utilizing MongoDB to feed data to a React created website to display book information
+
 
 ## Getting Started
 <!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+
+Utilizing express, cors, MongoDB, mongoose, and JavaScript
 
 ## Change Log
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
 
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
+### Feature One: MongoDB setup
 
-## Estimates
-<!-- See below -->
+Estimate of time needed to complete: 120 minutes (~2 hours)
+
+Start time: 1330
+
+Finish time: 1500
+
+Actual time needed to complete: 90 minutes (~hour and half)
+
+03-27-2023 1530 - Backend is set up and functioning to push data to frontend
 
 ## Credit and Collaborations
 
