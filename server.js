@@ -9,6 +9,9 @@ const { application } = require('express');
 //*** REQUIRE IN OUR MONGOOSE LIBRARY */
 const mongoose = require ('mongoose');
 
+//*** BRING IN MY BOOK MODEL */
+const Book = require('./models/book.js')
+
 const app = express();
 
 // Middleware
@@ -33,12 +36,24 @@ db.once('open', function () {
 });
 
 
-//test route
+//END POINTS
 app.get('/test', (request, response) => {
-
   response.send('test request received')
-
 })
+
+//** ENDPOINT TO RECEIVE ALL MY BOOKS FROM DATABASE */
+app.get('/books', getBooks);
+
+async function getBooks(request, response, next) {
+  //TODO GET ALL BOOKS FROM DB
+  try {
+    let allBooks = await Book.find({}); // Model.find({}) retrieves all docs form database
+
+    response.status(200).send(allBooks);
+  } catch (error) {
+    next(error);
+  }
+}
 
 // Catch all error
 app.get('*', (request, response)=> {
