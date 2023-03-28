@@ -17,6 +17,9 @@ const app = express();
 // Middleware
 app.use(cors());
 
+// ! DON'T FORGET TO BRING THIS IN!!!!
+app.use(express.json());
+
 // Define PORT validate env is working
 const PORT = process.env.PORT || 3002;
 
@@ -47,9 +50,40 @@ app.get('/books', getBooks);
 async function getBooks(request, response, next) {
   //TODO GET ALL BOOKS FROM DB
   try {
-    let allBooks = await Book.find({}); // Model.find({}) retrieves all docs form database
+    let allBooks = await Book.find({}); // Model.find({}) retrieves all docs from database
 
     response.status(200).send(allBooks);
+  } catch (error) {
+    next(error);
+  }
+}
+
+//*** ENDPOINT TO DELETE A BOOK FROM MY DATABASE */
+//!! WE MUST HAVE A PATH PARAMETER
+//!! PATH PARAMETER IS GOING TO BE SET WITH A VARIABLE TO CAPTURE THE ID
+//!! WE USE ':' TO SIGNIFY THAT IT IS A PATH PARAMETER
+
+app.delete('/books/:bookID', deleteBook);
+
+async function deleteBook(request, response, next){
+  try {
+    let id = request.params.bookID; // request.params gives an object holding the values at endpoint, adding the bookID presents just the value
+    await Book.findByIdAndDelete(id);
+
+    response.status(200).send('Book deleted!');
+  } catch (error) {
+    next(error);
+  }
+}
+
+//** ENDPOINT TO ADD A BOOK TO MY DATABASE */
+app.post('/books', postBook); // post is add
+
+async function postBook(request, response, next){
+  try {
+    let createdBook = await Book.create(request.body);
+
+    response.status(201).send(createdBook);
   } catch (error) {
     next(error);
   }
