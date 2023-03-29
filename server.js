@@ -4,7 +4,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { application } = require('express');
+const { application, response } = require('express');
 
 //*** REQUIRE IN OUR MONGOOSE LIBRARY */
 const mongoose = require ('mongoose');
@@ -58,6 +58,8 @@ async function getBooks(request, response, next) {
   }
 }
 
+
+
 //*** ENDPOINT TO DELETE A BOOK FROM MY DATABASE */
 //!! WE MUST HAVE A PATH PARAMETER
 //!! PATH PARAMETER IS GOING TO BE SET WITH A VARIABLE TO CAPTURE THE ID
@@ -84,6 +86,28 @@ async function postBook(request, response, next){
     let createdBook = await Book.create(request.body);
 
     response.status(201).send(createdBook);
+  } catch (error) {
+    next(error);
+  }
+}
+
+//*** END POINT TO UPDATE BOOK */
+app.put('/books/:bookID', modifyBook);
+
+async function modifyBook(request, response, next){
+  try {
+    // id = the cat to update, data = information to update the cat with
+    let id = request.params.bookID;
+    let data = request.body;
+
+    //! 3 Arguments
+    //! 1st - the id
+    //! 2nd - data
+    //! 3rd - options object { new: true, overwrite: true }
+
+    const updatedBook = await Book.findByIdAndUpdate(id, data, { new: true, overwrite: true });
+    
+    response.status(200).send(updatedBook);
   } catch (error) {
     next(error);
   }
